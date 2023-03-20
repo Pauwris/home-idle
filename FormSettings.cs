@@ -28,6 +28,16 @@ namespace home_idle
             timer1.Enabled = !timer1.Enabled;
             setControlsState();
         }
+        private void btnPing_Click(object sender, EventArgs e)
+        {
+            if (MyLocation.PingHost(tbHostnameIp.Text))
+            {
+                lblPingResult.Text = "OK";
+            } else
+            {
+                lblPingResult.Text = "Not reachable";
+            };
+        }
 
         private void FormSettings_Resize(object sender, EventArgs e)
         {
@@ -101,5 +111,7 @@ namespace home_idle
                 lblIdleSeconds.Text = "Off"; 
             }
         }
+
+
     }
 }

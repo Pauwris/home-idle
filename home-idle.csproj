@@ -8,10 +8,18 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>assets\building-home-house-color.ico</ApplicationIcon>
+    <PackageIcon>building-home-house-color.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="assets\building-home-house-color.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assets\building-home-house-color.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
