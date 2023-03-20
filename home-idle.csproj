@@ -7,11 +7,11 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>assets\building-home-house.ico</ApplicationIcon>
+    <ApplicationIcon>assets\building-home-house-color.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="assets\building-home-house.ico" />
+    <Content Include="assets\building-home-house-color.ico" />
   </ItemGroup>
 
 </Project>
