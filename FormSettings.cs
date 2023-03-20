@@ -4,39 +4,95 @@ namespace home_idle
 {
     public partial class FormSettings : Form
     {
+        private BreakIdle breakIdle = new BreakIdle();
         private bool allowVisible;     // ContextMenu's Show command used
+        private string pingResult = "";
 
         public FormSettings()
         {
             InitializeComponent();
-            setControlsState();
-            start();
+            LoadSettings();
+            SetControlsState();
+            UpdateLocation();
+
+            if (Properties.Settings.Default.AutoStartMonitoring)
+            {
+                StartMonitoring();
+            }            
         }
-        public void start()
+        private void SetControlsState()
+        {
+            int idleSeconds = breakIdle.secondsIdle();
+
+            if (timer1.Enabled)
+            {
+                btnStartStop.Text = "Stop";
+                lblIdleSeconds.Text = String.Format("{0} seconds idle", idleSeconds.ToString());
+            }
+            else
+            {
+                btnStartStop.Text = "Start";
+                lblIdleSeconds.Text = "Off";
+            }
+
+            if (pingResult == "OK")
+            {
+                lblPingResult.Text = "OK";
+                lblPingResult.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (pingResult == "Failed")
+            {
+                lblPingResult.Text = "Failed";
+                lblPingResult.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                lblPingResult.Text = "";
+            };
+        }
+
+        private void LoadSettings()
+        {
+            tbHostnameIp.Text = Properties.Settings.Default.HomeHostnameIP;
+            nudBreakIdleAfter.Value = Properties.Settings.Default.ResetIdleIntervalSeconds;
+        }
+        private void SaveSettings()
+        {
+            Properties.Settings.Default.HomeHostnameIP = tbHostnameIp.Text;
+            Properties.Settings.Default.ResetIdleIntervalSeconds = Decimal.ToInt32(nudBreakIdleAfter.Value);
+            Properties.Settings.Default.AutoStartMonitoring = timer1.Enabled;
+            Properties.Settings.Default.Save();
+        }
+
+        private void UpdateLocation()
+        {
+            pingResult = "";
+            SetControlsState();
+
+            Task.Run(() => {
+                pingResult = LocationInfo.PingHost(tbHostnameIp.Text) ? "OK" : "Failed";
+            });            
+        }
+
+        public void StartMonitoring()
         {
             timer1.Enabled = true;
-            setControlsState();
+            SetControlsState();
         }
-        public void stop()
+        public void StopMonitoring()
         {
             timer1.Enabled = false;
-            setControlsState();
+            SetControlsState();
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
         {            
             timer1.Enabled = !timer1.Enabled;
-            setControlsState();
+            SetControlsState();
         }
         private void btnPing_Click(object sender, EventArgs e)
         {
-            if (MyLocation.PingHost(tbHostnameIp.Text))
-            {
-                lblPingResult.Text = "OK";
-            } else
-            {
-                lblPingResult.Text = "Not reachable";
-            };
+            UpdateLocation();            
         }
 
         private void FormSettings_Resize(object sender, EventArgs e)
@@ -55,7 +111,7 @@ namespace home_idle
             }
             base.SetVisibleCore(value);
         }
-        private void minizeToTray()
+        private void MinizeToTray()
         {
             allowVisible = true;
             Show();
@@ -68,50 +124,39 @@ namespace home_idle
             {
                 this.WindowState = FormWindowState.Minimized;
             }
+            SaveSettings();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            BreakIdle breakIdle = new BreakIdle();
+        {            
             int idleSeconds = breakIdle.secondsIdle();
 
-            if (idleSeconds > 59)
+            // 5 Seconds before the reset, check location
+            if (idleSeconds == Properties.Settings.Default.ResetIdleIntervalSeconds - 6)
+            {
+                UpdateLocation();
+            }
+
+            if (pingResult == "OK" && idleSeconds > Properties.Settings.Default.ResetIdleIntervalSeconds - 1)
             {
                 breakIdle.resetIdle();
             }
 
-            lblIdleSeconds.Text = idleSeconds.ToString();
+            SetControlsState();
         }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            minizeToTray();
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MinizeToTray();
+        }
+
         private void notifyIconSysTray_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            minizeToTray();
+            MinizeToTray();
         }
-
-        private void setControlsState()
-        {
-            if (timer1.Enabled)
-            {
-                btnStartStop.Text = "Stop";
-                lblIdleSeconds.Text = "0";
-            }
-            else
-            {
-                btnStartStop.Text = "Start";
-                lblIdleSeconds.Text = "Off"; 
-            }
-        }
-
-
     }
 }

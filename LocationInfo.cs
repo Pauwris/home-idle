@@ -2,7 +2,7 @@
 
 namespace home_idle
 {
-    internal class MyLocation
+    internal class LocationInfo
     {
         public static bool PingHost(string nameOrAddress)
             {

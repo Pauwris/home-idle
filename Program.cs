@@ -2,6 +2,11 @@ namespace home_idle
 {
     internal static class Program
     {
+        public interface IMySettings
+        {
+            string HomeHostnameIp { get; }
+        }
+        
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
