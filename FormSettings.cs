@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 namespace home_idle
@@ -7,6 +8,8 @@ namespace home_idle
         private BreakIdle breakIdle = new BreakIdle();
         private bool allowVisible;     // ContextMenu's Show command used
         private string pingResult = "";
+        private int breakIdleCounter = 0;
+        private DateTime lastIdleBreak;
 
         public FormSettings()
         {
@@ -23,6 +26,16 @@ namespace home_idle
         private void SetControlsState()
         {
             int idleSeconds = breakIdle.secondsIdle();
+
+            if (lastIdleBreak == DateTime.MinValue)
+            {
+                lblLastBreak.Text = "Never";
+            } else
+            {
+                lblLastBreak.Text = lastIdleBreak.ToString();
+            }
+            
+            nudBreakCounter.Value = breakIdleCounter;
 
             if (timer1.Enabled)
             {
@@ -53,11 +66,28 @@ namespace home_idle
 
         private void LoadSettings()
         {
-            tbHostnameIp.Text = Properties.Settings.Default.HomeHostnameIP;
-            nudBreakIdleAfter.Value = Properties.Settings.Default.ResetIdleIntervalSeconds;
+            try
+            {
+                tbHostnameIp.Text = Properties.Settings.Default.HomeHostnameIP;
+                nudBreakIdleAfter.Value = Properties.Settings.Default.ResetIdleIntervalSeconds;
+                ckbRunOnStartup.Checked = Installer.WillRunOnStartup;
+            } catch(Exception ex)
+            {
+                Properties.Settings.Default.Save();
+            }
+            
         }
         private void SaveSettings()
         {
+            if (ckbRunOnStartup.Checked)
+            {
+                Installer.RegisterRunOnStartup();
+            }
+            else
+            {
+                Installer.UnRegisterRunOnStartup();
+            }
+
             Properties.Settings.Default.HomeHostnameIP = tbHostnameIp.Text;
             Properties.Settings.Default.ResetIdleIntervalSeconds = Decimal.ToInt32(nudBreakIdleAfter.Value);
             Properties.Settings.Default.AutoStartMonitoring = timer1.Enabled;
@@ -128,18 +158,20 @@ namespace home_idle
         }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {            
+        {
             int idleSeconds = breakIdle.secondsIdle();
 
             // 5 Seconds before the reset, check location
-            if (idleSeconds == Properties.Settings.Default.ResetIdleIntervalSeconds - 6)
+            if (idleSeconds == Properties.Settings.Default.ResetIdleIntervalSeconds - 9)
             {
                 UpdateLocation();
             }
 
             if (pingResult == "OK" && idleSeconds > Properties.Settings.Default.ResetIdleIntervalSeconds - 1)
-            {
+            {                
                 breakIdle.resetIdle();
+                breakIdleCounter += 1;
+                lastIdleBreak = DateTime.Now;
             }
 
             SetControlsState();

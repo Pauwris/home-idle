@@ -102,14 +102,14 @@ namespace home_idle
             INPUT[] inputs = new INPUT[2];
 
             inputs[0].type = 1; // INPUT_KEYBOARD
-            inputs[0].inputUnion.ki.wVk = 0x41; // Virtual Key Code for 'A'
+            inputs[0].inputUnion.ki.wVk = 0x87; // Virtual Key Code for 'VK_F24'
             inputs[0].inputUnion.ki.wScan = 0;
             inputs[0].inputUnion.ki.dwFlags = 0;
             inputs[0].inputUnion.ki.time = 0;
             inputs[0].inputUnion.ki.dwExtraInfo = IntPtr.Zero;
 
             inputs[1].type = 1; // INPUT_KEYBOARD
-            inputs[1].inputUnion.ki.wVk = 0x41; // Virtual Key Code for 'A'
+            inputs[1].inputUnion.ki.wVk = 0x87; // Virtual Key Code for 'VK_F24'
             inputs[1].inputUnion.ki.wScan = 0;
             inputs[1].inputUnion.ki.dwFlags = 2; // KEYEVENTF_KEYUP
             inputs[1].inputUnion.ki.time = 0;

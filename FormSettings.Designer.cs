@@ -38,6 +38,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIconSysTray = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblLastBreak = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.nudBreakCounter = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,10 +49,14 @@
             this.lblPingResult = new System.Windows.Forms.Label();
             this.btnPing = new System.Windows.Forms.Button();
             this.tbHostnameIp = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ckbRunOnStartup = new System.Windows.Forms.CheckBox();
             this.contextMenuStripSysStray.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBreakCounter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBreakIdleAfter)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
@@ -109,6 +116,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.lblLastBreak);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.nudBreakCounter);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -117,10 +129,42 @@
             this.groupBox1.Controls.Add(this.btnStartStop);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(210, 129);
+            this.groupBox1.Size = new System.Drawing.Size(210, 192);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Idle monitoring";
+            // 
+            // lblLastBreak
+            // 
+            this.lblLastBreak.AutoSize = true;
+            this.lblLastBreak.Location = new System.Drawing.Point(71, 154);
+            this.lblLastBreak.Name = "lblLastBreak";
+            this.lblLastBreak.Size = new System.Drawing.Size(38, 15);
+            this.lblLastBreak.TabIndex = 8;
+            this.lblLastBreak.Text = "Never";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 135);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(146, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Break idle counter and last";
+            // 
+            // nudBreakCounter
+            // 
+            this.nudBreakCounter.Location = new System.Drawing.Point(6, 152);
+            this.nudBreakCounter.Maximum = new decimal(new int[] {
+            99999999,
+            0,
+            0,
+            0});
+            this.nudBreakCounter.Name = "nudBreakCounter";
+            this.nudBreakCounter.ReadOnly = true;
+            this.nudBreakCounter.Size = new System.Drawing.Size(59, 23);
+            this.nudBreakCounter.TabIndex = 6;
+            this.nudBreakCounter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label3
             // 
@@ -143,7 +187,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 97);
+            this.label1.Location = new System.Drawing.Point(71, 97);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 15);
             this.label1.TabIndex = 3;
@@ -172,7 +216,7 @@
             this.nudBreakIdleAfter.TabIndex = 2;
             this.nudBreakIdleAfter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nudBreakIdleAfter.Value = new decimal(new int[] {
-            60,
+            90,
             0,
             0,
             0});
@@ -219,11 +263,33 @@
             this.tbHostnameIp.Size = new System.Drawing.Size(95, 23);
             this.tbHostnameIp.TabIndex = 0;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.ckbRunOnStartup);
+            this.groupBox3.Location = new System.Drawing.Point(228, 80);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(249, 62);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Behavior";
+            // 
+            // ckbRunOnStartup
+            // 
+            this.ckbRunOnStartup.AutoSize = true;
+            this.ckbRunOnStartup.Location = new System.Drawing.Point(18, 25);
+            this.ckbRunOnStartup.Name = "ckbRunOnStartup";
+            this.ckbRunOnStartup.Size = new System.Drawing.Size(145, 19);
+            this.ckbRunOnStartup.TabIndex = 0;
+            this.ckbRunOnStartup.Text = "Startiup with Windows";
+            this.ckbRunOnStartup.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 147);
+            this.ClientSize = new System.Drawing.Size(489, 224);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -232,15 +298,18 @@
             this.Name = "FormSettings";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Home-idle";
+            this.Text = "home-idle";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormConsole_FormClosing);
             this.Resize += new System.EventHandler(this.FormSettings_Resize);
             this.contextMenuStripSysStray.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBreakCounter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBreakIdleAfter)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -263,5 +332,10 @@
         private NumericUpDown nudBreakIdleAfter;
         private Label label3;
         private Label label2;
+        private GroupBox groupBox3;
+        private CheckBox ckbRunOnStartup;
+        private Label label4;
+        private NumericUpDown nudBreakCounter;
+        private Label lblLastBreak;
     }
 }

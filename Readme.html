@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home-Idle</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="home-idle">Home-Idle</h1>
+<p>App that keeps Windows from going idle when there is no user activity on your desktop, like no mouse movement or keyboard usage.</p>
+<p>The idle state will only be broken when you are home, and where it's safe to leave the computer unattended. The app stores the last process state (stopped or running) and other settings.</p>
+<p><img src="assets/home-idle-form.jpg" alt="Form"></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>
+<p>Define your &quot;home&quot; location by configuring a ping test to a home device, such as a printer or Wifi access point. The break of the idle state only happens when the last ping state is <span style="color:green">OK</span>.</p>
+<p><img src="assets/home-idle-ping-ok.jpg" alt="ping-OK"></p>
+<p><img src="assets/home-idle-ping-failed.jpg" alt="ping-failed"></p>
+<p>Use <code>127.0.0.1</code> when you don't care about security.</p>
+</li>
+<li>
+<p>The app will reside in the <a href="https://learn.microsoft.com/en-us/windows/win32/shell/notification-area">notification area</a> when minized.</p>
+<p><img src="assets/home-idle-notification-area.jpg" alt="notification-area"></p>
+</li>
+<li>
+<p>You can control the maximum wait interval before the app will break the idle state of Windows with the <code>Break idle after</code> value in seconds.</p>
+</li>
+<li>
+<p>The last idle break timestamp and counter since the app started can be consulted.</p>
+</li>
+<li>
+<p>Control for your user only the auto-run behavior of the app with the checkbox.</p>
+</li>
+</ul>
+
+        
+        
+    </body>
+    </html>

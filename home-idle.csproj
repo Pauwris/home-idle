@@ -9,6 +9,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>assets\building-home-house-color.ico</ApplicationIcon>
     <PackageIcon>building-home-house-color.png</PackageIcon>
+    <Title>home-idle</Title>
+    <Authors>Kristof Pauwels</Authors>
+    <Description>App that keeps Windows from going idle when there is no user activity on your desktop, like no mouse movement or keyboard usage.
+
+The idle state will only be broken when you are home, and where it's safe to leave the computer unattended. The app stores the last process state (stopped or running) and other settings.</Description>
+    <Copyright>Kristof Pauwels</Copyright>
+    <PackageProjectUrl>https://github.com/Pauwris/home-idle</PackageProjectUrl>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +39,10 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
