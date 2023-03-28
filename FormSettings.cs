@@ -21,11 +21,14 @@ namespace home_idle
             if (Properties.Settings.Default.AutoStartMonitoring)
             {
                 StartMonitoring();
-            }            
+            }
         }
         private void SetControlsState()
         {
             int idleSeconds = breakIdle.secondsIdle();
+
+            nudBreakCounter.Value = breakIdleCounter;
+            
 
             if (lastIdleBreak == DateTime.MinValue)
             {
@@ -34,8 +37,13 @@ namespace home_idle
             {
                 lblLastBreak.Text = lastIdleBreak.ToString();
             }
-            
-            nudBreakCounter.Value = breakIdleCounter;
+
+
+            lblSessionState.Text = String.Format("Session state ({0})", breakIdle.sessionIsLocked ? "Locked" : "Unlocked");
+            if (breakIdle.lastSessionLock > DateTime.MinValue)
+            {
+                lblSessionState.Text += String.Format("\nLast lock {0}", breakIdle.lastSessionLock.ToString());
+            }
 
             if (timer1.Enabled)
             {
@@ -71,7 +79,7 @@ namespace home_idle
                 tbHostnameIp.Text = Properties.Settings.Default.HomeHostnameIP;
                 nudBreakIdleAfter.Value = Properties.Settings.Default.ResetIdleIntervalSeconds;
                 ckbRunOnStartup.Checked = Installer.WillRunOnStartup;
-            } catch(Exception ex)
+            } catch(Exception)
             {
                 Properties.Settings.Default.Save();
             }
@@ -97,11 +105,18 @@ namespace home_idle
         private void UpdateLocation()
         {
             pingResult = "";
-            SetControlsState();
 
-            Task.Run(() => {
-                pingResult = LocationInfo.PingHost(tbHostnameIp.Text) ? "OK" : "Failed";
-            });            
+            if (tbHostnameIp.Text == "")
+            {
+                pingResult = "Disabled";
+            } else
+            {                
+                SetControlsState();
+
+                Task.Run(() => {
+                    pingResult = LocationInfo.PingHost(tbHostnameIp.Text) ? "OK" : "Failed";
+                });         
+            }              
         }
 
         public void StartMonitoring()
@@ -118,6 +133,7 @@ namespace home_idle
         private void btnStartStop_Click(object sender, EventArgs e)
         {            
             timer1.Enabled = !timer1.Enabled;
+            SaveSettings();
             SetControlsState();
         }
         private void btnPing_Click(object sender, EventArgs e)
@@ -162,12 +178,12 @@ namespace home_idle
             int idleSeconds = breakIdle.secondsIdle();
 
             // 5 Seconds before the reset, check location
-            if (idleSeconds == Properties.Settings.Default.ResetIdleIntervalSeconds - 9)
+            if (breakIdle.sessionIsLocked == false && idleSeconds == Properties.Settings.Default.ResetIdleIntervalSeconds - 9)
             {
                 UpdateLocation();
             }
 
-            if (pingResult == "OK" && idleSeconds > Properties.Settings.Default.ResetIdleIntervalSeconds - 1)
+            if (breakIdle.sessionIsLocked == false && (pingResult == "Disabled" || pingResult == "OK") && idleSeconds > Properties.Settings.Default.ResetIdleIntervalSeconds - 1)
             {                
                 breakIdle.resetIdle();
                 breakIdleCounter += 1;

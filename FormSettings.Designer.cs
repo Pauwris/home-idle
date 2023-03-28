@@ -51,12 +51,15 @@
             this.tbHostnameIp = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.ckbRunOnStartup = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblSessionState = new System.Windows.Forms.Label();
             this.contextMenuStripSysStray.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudBreakCounter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBreakIdleAfter)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
@@ -129,7 +132,7 @@
             this.groupBox1.Controls.Add(this.btnStartStop);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(210, 192);
+            this.groupBox1.Size = new System.Drawing.Size(210, 201);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Idle monitoring";
@@ -284,11 +287,33 @@
             this.ckbRunOnStartup.Text = "Startiup with Windows";
             this.ckbRunOnStartup.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Controls.Add(this.lblSessionState);
+            this.groupBox4.Location = new System.Drawing.Point(228, 150);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(249, 63);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Session state";
+            // 
+            // lblSessionState
+            // 
+            this.lblSessionState.AutoSize = true;
+            this.lblSessionState.Location = new System.Drawing.Point(6, 22);
+            this.lblSessionState.Name = "lblSessionState";
+            this.lblSessionState.Size = new System.Drawing.Size(58, 15);
+            this.lblSessionState.TabIndex = 9;
+            this.lblSessionState.Text = "Unknown";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 224);
+            this.ClientSize = new System.Drawing.Size(489, 225);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -310,6 +335,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -337,5 +364,7 @@
         private Label label4;
         private NumericUpDown nudBreakCounter;
         private Label lblLastBreak;
+        private GroupBox groupBox4;
+        private Label lblSessionState;
     }
 }

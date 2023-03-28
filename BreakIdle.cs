@@ -1,9 +1,33 @@
-﻿using System.Runtime.InteropServices;
+﻿using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace home_idle
 {
     internal class BreakIdle
     {
+
+        public bool sessionIsLocked = false;
+        public DateTime lastSessionLock;
+
+        public BreakIdle()
+        {
+            //Microsoft.Win32.SystemEvents.SessionSwitch += new Microsoft.Win32.SessionSwitchEventHandler(OnSessionSwitchEvent);
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnSessionSwitchEvent);
+        }
+
+        private void OnSessionSwitchEvent(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock)
+            {
+                sessionIsLocked = true;
+                lastSessionLock = DateTime.Now;
+            }
+            else
+            {
+                sessionIsLocked = false;
+            }
+        }
+
         [DllImport("user32.dll")]
         static extern bool GetLastInputInfo(out LASTINPUTINFO plii);
 
